@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <title>Survey</title>
 </head>
 
@@ -20,11 +21,16 @@
         <h3>
             <strong>About you</strong>
         </h3>
+
         <br>
-        <h4>Name (Required)</h4>
-        <input type="text" id="name" class="form-control" required>
-        <h4>Link to Photo Image (Required)</h4>
-        <input type="text" id="photo" class="form-control" required>
+
+        <h5>Name (required)</h5>
+        <input id="name" type="text" class="validate" required>
+        <label class="active" for="name"></label>
+
+        <h5>Link to Photo Image (required)</h5>
+        <input id="photo" type="text" class="validate" required>
+        <label class="active" for="name"></label>
         <hr>
     </div>
 
@@ -176,7 +182,7 @@
                     </div>
                     <div class="modal-body">
                         <h2 id="match-name"></h2>
-                        <img id="match-img" src="" alt="">
+                        <img id="match-img">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -196,11 +202,74 @@
 
     </div>
 
-
-
-
     </div>
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#submit").on("click", function () {
+                //form validation
+                function validateForm() {
+                    var isValid = true;
+                    $(".validate").each(function () {
+                        if ($(this).val() === "") {
+                            isValid = false;
+                        }
+                    });
+                    $(".browser-default").each(function () {
+                        if ($(this).val() === "") {
+                            isValid = false;
+                        }
+                    });
+                    return isValid;
+                }
+                //if everything is filled
+                if (validateForm() == true) {
+                    //creates a new friend from the values submitted
+                    var newFriend = {
+                        name: $("#name").val().trim(),
+                        profPhoto: $("#photo").val().trim(),
+                        scores: [
+                            $("#q1").val(),
+                            $("#q2").val(),
+                            $("#q3").val(),
+                            $("#q4").val(),
+                            $("#q5").val(),
+                            $("#q6").val(),
+                            $("#q7").val(),
+                            $("#q8").val(),
+                            $("#q9").val(),
+                            $("#q10").val(),
+                        ]
+                    };
+                    //Grabs current URL of website
+                    var currentURL = window.location.origin;
+                    //AJAX posts the data to friends API.
+                    $.post(currentURL + "/api/friends", newFriend, function (data) {
+                        //Grab the result from the AJAX post so that the best match"s name and photo are displayed.
+                        $("#match-name").text(data.name);
+                        $("#match-img").attr("src", data.proPhoto);
+                    });
+                    // Show the modal with the best match
+                    $("#results-modal").modal("toggle");
+                    //clear form after submission
+                    $("#name").val("");
+                    $("#photo").val("");
+                    $("#q1").val("");
+                    $("#q2").val("");
+                    $("#q3").val("");
+                    $("#q4").val("");
+                    $("#q5").val("");
+                    $("#q6").val("");
+                    $("#q7").val("");
+                    $("#q8").val("");
+                    $("#q9").val("");
+                    $("#q10").val("");
+                } else {
+                    alert("Please fill out ALL fields before submitting survey!")
+                }
+                // return false;
+            });
+        });
+    </script>
 </body>
 
 </html>
