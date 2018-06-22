@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
     <title>Survey</title>
 </head>
 
@@ -175,14 +179,15 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h2 class="modal-title">
                             <strong>Best Match</strong>
                         </h2>
+
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <h2 id="match-name"></h2>
-                        <img id="match-img">
+                        <h2 id="match-name">Robert Downey Jr.</h2>
+                        <img id="match-img" src="https://naqyr37xcg93tizq734pqsx1-wpengine.netdna-ssl.com/wp-content/uploads/2017/10/RDJ.jpg">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -195,8 +200,8 @@
 
         <footer>
             <div class="container">
-                <a href="API">API Friends List</a> |
-                <a href="github">GitHub Repo</a>
+                <a href="/api/friends">API Friends List</a> |
+                <a href="https://github.com/erosales95/FriendFinder">GitHub Repo</a>
             </div>
         </footer>
 
@@ -249,7 +254,7 @@
                         $("#match-img").attr("src", data.proPhoto);
                     });
                     // Show the modal with the best match
-                    $("#results-modal").modal("toggle");
+                    $("#results-modal").modal("show");
                     //clear form after submission
                     $("#name").val("");
                     $("#photo").val("");
